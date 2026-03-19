@@ -1,0 +1,27 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tableau files
+*.twbx
+*.twb~
+*.hyper
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+*.egg-info/
+
+# Data (optional - uncomment if data is sensitive)
+# data/*.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log

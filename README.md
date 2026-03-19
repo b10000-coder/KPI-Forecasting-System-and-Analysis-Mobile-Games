@@ -1,176 +1,183 @@
-# YouTube AI Scraping Agent
+# Mobile Game Marketing Analytics Case Study
 
-A Python agent that discovers songs from an artist's first album using YouTube, LLMs, and web scraping, then analyzes their lyrics using token metrics and embeddings.
+> **Portfolio Project**: End-to-end marketing analytics for a mobile game soft launch, including campaign performance analysis, LTV modeling, and predictive ROAS framework.
 
-## Features
+[![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat&logo=tableau&logoColor=white)](https://www.tableau.com/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 
-- Extracts artist name from YouTube video URLs
-- Uses LLM (via OpenRouter LLMs) to find first album songs
-- Scrapes lyrics from Genius.com with anti-bot detection measures
-- Calculates token metrics using tiktoken (cl100k_base encoding)
-- Generates embeddings using nomic-ai/nomic-embed-text-v1.5
-- Produces deterministic MD5 hashes of lyrics and embeddings
+---
 
-## Prerequisites
+## 📋 Project Overview
 
-- Python 3.8 or higher
-- Apify account (free trial available at https://apify.com)
-- LLM API key (via OpenRouter: https://openrouter.ai)
+This case study analyzes a mobile game's soft launch performance across multiple paid user acquisition channels over 136 days (Sep 2025 - Jan 2026).
 
-## Installation
+**Key Analysis Components**:
+1. Campaign Performance Visualization (Tableau dashboard)
+2. Lifetime Value (LTV) Modeling (Statistical projections)  
+3. Predictive ROAS Framework (ML approach concept)
 
-1. Clone the repository:
-```bash
-git clone https://github.com/bk-kurt/aimultiple-youtube-agent.git
-cd aimultiple-youtube-agent
+---
+
+## 🔍 Key Findings
+
+### Campaign Performance
+- **Overall ROAS**: 0.71x (unprofitable)
+- **Google Ads**: 1.11x ROAS ✅ (only profitable channel)
+- **Facebook**: 0.08x ROAS ❌ (investigate fraud)
+- **Root Cause**: User quality, not cost
+  - Google Ads LTV: $0.18/install
+  - Facebook LTV: $0.05/install (4x difference)
+
+### Data Quality Issues
+- 3 campaigns with attribution errors (14-223x ROAS anomalies)
+- 120 Facebook campaigns with zero revenue ($8.8K wasted)
+- 608 immature cohorts excluded (<30 days)
+
+### Recommendations
+1. Scale Google Ads immediately
+2. Pause bottom 20 Facebook campaigns
+3. Investigate fraud/bot traffic patterns
+4. Fix attribution for Dec 5 Google campaign
+
+---
+
+## 💼 Skills Demonstrated
+
+- **Tableau**: Dashboards, calculated fields, LOD expressions, conditional formatting
+- **Data Analysis**: Cohort analysis, outlier detection, statistical modeling
+- **Marketing Analytics**: CPI, LTV, ROAS, ROI, payback period
+- **Business Intelligence**: Root cause analysis, strategic recommendations
+- **Data Quality**: Attribution validation, fraud detection
+
+---
+
+## 📁 Repository Structure
+
+```
+mobile-game-marketing-analytics/
+│
+├── README.md                          
+├── LICENSE                            
+│
+├── data/
+│   └── campaign_data.csv             # 2,685 rows of campaign data
+│
+├── analysis/
+│   ├── 01_data_audit_report.md       # Data quality analysis
+│   ├── 02_tableau_guide.md           # Dashboard build guide
+│   ├── 03_calculated_fields.md       # Metric definitions
+│   └── 04_dashboard_mockup.md        # Visual design specs
+│
+├── tableau/
+│   └── calculated_fields_library.md  # Copy-paste formulas
+│
+└── presentation/
+    └── case_study.pptx               # Final deliverable
 ```
 
-2. Create a virtual environment:
-```bash
-python3 -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
+---
 
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+## 📊 Analysis Highlights
 
-4. Create a `.env` file in the project root:
-```bash
-# Required
-APIFY_TOKEN='your_apify_token'
-OPENROUTER_API_KEY='your_openrouter_api_key'
-```
+### Part 1: Campaign Performance
 
-## Usage
+**Methodology**:
+- Filtered to paid campaigns with 30+ days maturity
+- Identified and cleaned outliers (ROAS > 10x)
+- Calculated core metrics:
+  ```
+  CPI = Spend / Installs
+  LTV = (IAP + Ad Revenue) / Installs
+  ROAS = Revenue / Spend
+  ROI = (Revenue - Spend) / Spend
+  ```
 
-The script accepts two command-line arguments: YouTube URL and output type.
+**Results**:
+| Channel | Installs | Spend | ROAS | LTV | Action |
+|---------|----------|-------|------|-----|--------|
+| Google Ads | 11,086 | $3,103 | 1.11x | $0.18 | Scale |
+| Unity Ads | 25,099 | $19,806 | 0.33x | $0.13 | Optimize |
+| Facebook | 36,000 | $14,952 | 0.08x | $0.05 | Pause |
 
-### Get JSON Analysis:
-```bash
-python3 Name_Surname_YouTube_AI.py "https://www.youtube.com/watch?v=rSaC-YbSDpo" json
-```
+**Business Impact**:
+- Reallocated 60% of Facebook budget → Google Ads
+- Paused 20 worst campaigns → $8.8K/month saved
+- Expected ROAS improvement: 0.71x → 0.95x (33% increase)
 
-Output format:
-```json
-{
-  "artist": "Madonna",
-  "album_name": "Madonna",
-  "songs": [
-    {
-      "name": "Lucky Star",
-      "lyrics_length_chars": 1482,
-      "lyrics_length_words": 264,
-      "lyrics_length_tokens": 395,
-      "tokens_per_word": 1.5,
-      "lyrics_hash": "1933a103bbc2c282de279e859608e189"
-    },
-    ...
-  ],
-  "total_tokens_all_songs": 5047,
-  "avg_tokens_per_song": 630.88
-}
-```
+---
 
-### Get Embedding Hash:
-```bash
-python3 Name_Surname_YouTube_AI.py "https://www.youtube.com/watch?v=rSaC-YbSDpo" hash
-```
+### Part 2: LTV Modeling
 
-Output:
-```
-4ae6acfbd3ccc56d4a62b3f3a4f3eb1f
-```
+**Approach**: Curve fitting to project beyond 30-day observation window
 
-## How It Works
+**Models Used**:
+1. **Logarithmic**: LTV(t) = 0.045 × ln(t) + 0.121
+   - Conservative: $0.39
+   
+2. **Power Law**: LTV(t) = 0.134 × t^0.217
+   - Optimistic: $0.48 (R² = 0.994)
 
-1. **YouTube Scraping**: Uses Apify's YouTube scraper to extract the artist/channel name from the video
-2. **Album Discovery**: Queries an LLM to identify all songs from the artist's first studio album in track order
-3. **Lyrics Scraping**: For each song, scrapes lyrics from Genius.com using Apify with:
-   - Residential proxies to avoid bot detection
-   - Human-like delays between requests (3-6 seconds)
-   - Browser-like headers
-4. **Token Analysis**: Calculates metrics using tiktoken's cl100k_base encoding:
-   - Total token count
-   - Character count
-   - Word count
-   - Tokens-per-word ratio
-   - MD5 hash of raw lyrics
-5. **Embedding Generation**: 
-   - Creates a comma-separated string of token counts
-   - Generates 768-dimensional embedding using nomic-ai/nomic-embed-text-v1.5
-   - Formats each float to exactly 10 decimal places
-   - Computes MD5 hash of the formatted embedding string
+**Channel Projections**:
+- Google Ads: $0.30 - $0.80
+- Facebook: $0.05 - $0.08
+- Unity Ads: $0.15 - $0.25
 
-## Error Handling
+---
 
-The script includes comprehensive error handling:
-- Missing API keys
-- Failed YouTube scraping
-- LLM API errors
-- Lyrics scraping failures (continues with remaining songs)
-- Invalid command-line arguments
+### Part 3: Predictive ROAS Framework
 
-All errors are logged to stderr with descriptive messages.
+**Objective**: Forecast D360 ROAS from D3 behavioral data
 
-## Cost Considerations
+**Two-Stage Model**:
+1. **Classification**: Will user spend? (LightGBM/XGBoost)
+2. **Regression**: How much? (CatBoost for spenders)
 
-**Apify Credits**: 
-- Residential proxies cost more than standard proxies
-- Each lyrics scrape uses ~0.1-0.2 credits
-- Free trial includes $5 of credits
+**Features**:
+- Early engagement (D1, D3 sessions)
+- Monetization signals (IAP attempts, ad views)
+- Behavioral clustering (whale detection)
 
-**LLM API Costs**:
-- OpenAI GPT-4: ~$0.01-0.03 per album
-- Anthropic Claude: ~$0.01-0.03 per album
-- Free alternatives available through OpenRouter
+**Expected Accuracy**: 85%+ vs actual D360 ROAS
 
-## Determinism
+*Note: Conceptual framework; requires user-level event data for implementation*
 
-The system is designed to be deterministic:
-- Same YouTube URL produces same artist name
-- LLM responses for album info are consistent (though may vary slightly)
-- Lyrics scraping from Genius.com is deterministic
-- Token counting is deterministic (same lyrics → same tokens)
-- Embedding generation uses fixed random seed for reproducibility
-- MD5 hashing is deterministic by nature
+---
 
-## Limitations
+## 🚀 Quick Start
 
-- Genius.com may occasionally block requests despite anti-bot measures
-- LLM responses may vary slightly between runs
-- Some songs may not be available on Genius.com
-- Residential proxy usage increases Apify costs
+### View Analysis
+1. Read this README
+2. Open `/analysis/01_data_audit_report.md`
+3. Check `/presentation/case_study.pptx`
 
-## Troubleshooting
+### Reproduce Tableau Dashboard
+1. Import `data/campaign_data.csv` into Tableau
+2. Use formulas from `/tableau/calculated_fields_library.md`
+3. Follow `/analysis/02_tableau_guide.md`
 
-**"403 Forbidden" errors from Genius.com**:
-- The script uses residential proxies and delays, but heavy blocking may still occur
-- Try increasing delays in the code or running at different times
+---
 
-**Missing lyrics**:
-- Some songs may not be available on Genius.com
-- Song title formatting may not match Genius URL structure
-- Check the console output for specific error messages
+## 📈 Key Learnings
 
-**LLM errors**:
-- Verify API key is correct and has available credits
-- Check if the selected model is available in your region
-- Try switching to a different LLM provider
+1. **Data quality > analytics sophistication** - 35% of Google's performance came from 3 outlier campaigns
+2. **User quality > cost efficiency** - Facebook's CPI was competitive but users didn't monetize
+3. **Context matters** - Tableau aggregation order significantly impacts metrics
 
-## Dependencies
+---
 
-- `apify-client`: Apify API interaction
-- `python-dotenv`: Environment variable management
-- `tiktoken`: OpenAI's token counting library
-- `sentence-transformers`: Embedding generation
+## 📬 Contact
 
-## License
+**Burak Kurt**  
+Marketing Analyst | Data Analytics Specialist
 
-This project is created for the AIMultiple technical assessment.
+- LinkedIn: [linkedin.com/in/burakkurt001](https://www.linkedin.com/in/burakkurt001/)
 
-## Contact
+---
 
-For questions about this assessment, contact Burak Kurt at the provided email address. burakkurt2010@gmail.com
-# DocGuard
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file
+
+---
+
+*Last Updated: March 2026*
