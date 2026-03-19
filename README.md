@@ -122,11 +122,15 @@ mobile-game-marketing-analytics/
 - Facebook: $0.05 - $0.08
 - Unity Ads: $0.15 - $0.25
 
+![Framework](images/Screenshot%202026-03-19%20at%2016.52.01.png)
+
 ---
 
 ### Part 3: Predictive ROAS Framework
 
 **Objective**: Forecast D360 ROAS from D3 behavioral data
+
+![Framework](images/Screenshot%202026-03-19%20at%2016.52.19.png)
 
 **Two-Stage Model**:
 1. **Classification**: Will user spend? (LightGBM/XGBoost)
