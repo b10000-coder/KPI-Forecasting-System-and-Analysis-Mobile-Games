@@ -1,9 +1,18 @@
-# Mobile Game Marketing Analytics Case Study
+# Marketing Analytics / KPI-Forecasting-System-and-Analysis-Mobile-Games
+
 
 > **Portfolio Project**: End-to-end marketing analytics for a mobile game soft launch, including campaign performance analysis, LTV modeling, and predictive ROAS framework.
 
+[![Product Analytics](https://img.shields.io/badge/Product%20Analytics-6A5ACD?style=flat)]()
+[![LTV Modeling](https://img.shields.io/badge/LTV%20Modeling-2E8B57?style=flat)]()
+[![Machine Learning](https://img.shields.io/badge/Machine%20Learning-102230?style=flat&logo=tensorflow&logoColor=orange)]()
+[![A/B Testing](https://img.shields.io/badge/A%2FB%20Testing-FF4088?style=flat)]()
+[![Data Analysis](https://img.shields.io/badge/Data%20Analysis-4CAF50?style=flat)]()
+[![Marketing Analytics](https://img.shields.io/badge/Marketing%20Analytics-FF6F61?style=flat)]()
 [![Tableau](https://img.shields.io/badge/Tableau-E97627?style=flat&logo=tableau&logoColor=white)](https://www.tableau.com/)
 [![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+
+
 
 ---
 
