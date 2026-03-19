@@ -88,6 +88,8 @@ mobile-game-marketing-analytics/
 
 ## 📊 Analysis Highlights
 
+![Screenshot](images/Screenshot%202026-03-19%20at%2023.50.13.png)
+
 ### Part 1: Campaign Performance
 
 **Methodology**:
